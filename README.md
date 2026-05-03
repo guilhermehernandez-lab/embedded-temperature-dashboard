@@ -5,7 +5,7 @@ A simple IoT system that simulates a temperature sensor in C and visualizes the 
 ## 🚀 Features
 
 * Temperature simulation in C
-* Data sent via HTTP (POST requests)
+* Data sent via HTTP
 * Python Flask backend
 * Real-time chart using Chart.js
 
