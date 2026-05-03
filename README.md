@@ -13,6 +13,10 @@ A simple IoT system that simulates a temperature sensor in C and visualizes the 
 
 Sensor (C) → HTTP → Flask → Web Dashboard
 
+## 📸 Demo
+
+![Dashboard](screenshot.png)
+
 ## ⚙️ How to Run
 
 ```bash
