@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>IoT Temperature Monitor</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<h2>Real Time Temperature</h2>
+<h1 id="currentTemp">-- °C</h1>
+
+<canvas id="chart" width="800" height="400"></canvas>
+
+<script>
+let temps = [];
+let labels = [];
+
+const ctx = document.getElementById('chart').getContext('2d');
+
+const chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: labels,
+        datasets: [{
+            label: 'Temperature (°C)',
+            data: temps,
+            borderColor: 'blue',
+            backgroundColor: 'rgba(0, 0, 255, 0.1)',
+            tension: 0.4,
+            fill: true,
+            pointRadius: 2
+        }]
+    }
+});
+
+async function fetchData() {
+
+    const response = await fetch('/data');
+    const data = await response.json();
+
+    temps.length = 0;
+    labels.length = 0;
+
+    data.forEach((item, index) => {
+        temps.push(item.temp);
+        labels.push(index);
+    });
+
+
+    if (temps.length > 50) {
+        temps.shift();
+        labels.shift();
+    }
+
+
+    if (temps.length > 0) {
+        let current = temps[temps.length - 1];
+        document.getElementById("currentTemp").innerText = current + " °C";
+
+    
+        if (current > 30) {
+            document.body.style.backgroundColor = "#ffcccc";
+        } else {
+            document.body.style.backgroundColor = "white";
+        }
+    }
+
+    chart.update();
+}
+
+
+setInterval(fetchData, 1000);
+
+</script>
+
+</body>
+</html>
